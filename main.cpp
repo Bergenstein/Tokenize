@@ -42,10 +42,22 @@ int main(void) {
                         line)) // from csvfile into a line (local variable)
     {
       tokens = tokenise(line, ',');
-      for (std::string &token : tokens) {
-        std::cout << "the token is: " << token << std::endl;
+      if (tokens.size() != 5) {
+        std::cout << "wrong input. " << std::endl;
+      } else {
+        try {
+          double price = std::stod(tokens[3]);
+          double amount = std::stod(tokens[4]);
+          std::cout << "price: " << price << "amount: " << amount << std::endl;
+        } catch (const std::exception &e) {
+          std::cout << "couldn't convert to double. " << std::endl;
+          continue;
+        }
+        // for (std::string &token : tokens) {
+        //   std::cout << "the token is: " << token << std::endl;
+        // }
       }
-    }
+    } // end of while
     csvFile.close();
   } else {
     std::cout << "unable to open file. " << std::endl;
