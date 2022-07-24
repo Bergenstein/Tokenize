@@ -1,7 +1,7 @@
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 std::vector<std::string> tokenise(std::string csvLine, char separator) {
   std::vector<std::string> tokens;
@@ -31,28 +31,29 @@ std::vector<std::string> tokenise(std::string csvLine, char separator) {
 }
 
 int main(void) {
-  std::vector<std::string>tokens;
-    std::string line;
-    std::ifstream csvFile{"20200317.csv"}; //an object of input filestream class
-    if(csvFile.is_open())
+  std::vector<std::string> tokens;
+  std::string line;
+  std::ifstream csvFile{"20200317.csv"}; // an object of input filestream class
+  if (csvFile.is_open()) {
+    std::cout << "file open. " << std::endl;
+
+    // getline returns a bool
+    while (std::getline(csvFile,
+                        line)) // from csvfile into a line (local variable)
     {
-        std::cout<<"file open. "<<std::endl;
-        
-        //getline returns a bool
-        while(std::getline(csvFile, line))//from csvfile into a line (local variable)
-        {
-            std::cout<<"line is: "<<line<<std::endl;
-        }
-        csvFile.close();
-    } 
-    else 
-    {
-        std::cout<<"unable to open file. "<<std::endl;
+      tokens = tokenise(line, ',');
+      for (std::string &token : tokens) {
+        std::cout << "the token is: " << token << std::endl;
+      }
     }
-    // tokens=tokenise(csvFile, ',');
-    // for(int i=0; i<tokens.size();++i)
-    // {
-    //     std::cout<<"the token is: "<<tokens.at(i)<<std::endl;
-    // }
+    csvFile.close();
+  } else {
+    std::cout << "unable to open file. " << std::endl;
+  }
+  // tokens=tokenise(csvFile, ',');
+  // for(int i=0; i<tokens.size();++i)
+  // {
+  //     std::cout<<"the token is: "<<tokens.at(i)<<std::endl;
+  // }
   return 0;
 }
